@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kirjautuminen</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+form {
+  width: 300px;
+  margin: 80px auto;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+h1 {
+  text-align: center;
+}
+label {
+  display: block;
+  margin-top: 10px;
+}
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #2c7be5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #1a5fc0;
+}
+#viesti {
+  margin-top: 15px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<form onsubmit="return tarkista()">
+<h1>Kirjaudu sisään</h1>
+
+<label for="kayttaja">Käyttäjätunnus:</label>
+<input type="text" id="kayttaja" required>
+
+<label for="salasana">Salasana:</label>
+<input type="password" id="salasana" required>
+
+<button type="submit">Kirjaudu</button>
+
+<p id="viesti"></p>
+</form>
+
+<script>
+function tarkista() {
+  var kayttaja = document.getElementById("kayttaja").value;
+  var salasana = document.getElementById("salasana").value;
+  var viesti = document.getElementById("viesti");
+
+  if (kayttaja == "admin" && salasana == "salasana") {
+    viesti.style.color = "green";
+    viesti.innerHTML = "Kirjautuminen onnistui";
+  } else {
+    viesti.style.color = "red";
+    viesti.innerHTML = "Väärä käyttäjätunnus tai salasana";
+  }
+
+  return false;
+}
+</script>
+
+</body>
+</html>
