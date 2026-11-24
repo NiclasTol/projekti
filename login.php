@@ -1,3 +1,7 @@
+<?php 
+require ( "functions.php");
+?>
+
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -51,37 +55,31 @@ button:hover {
 </head>
 <body>
 
-<form onsubmit="return tarkista()">
+<form method="post" action="/login.php">
 <h1>Kirjaudu sisään</h1>
 
-<label for="kayttaja">Käyttäjätunnus:</label>
-<input type="text" id="kayttaja" required>
+<label for="username">Käyttäjätunnus:</label>
+<input type="text" name="username" required>
 
-<label for="salasana">Salasana:</label>
-<input type="password" id="salasana" required>
+<label for="password">Salasana:</label>
+<input type="password" name="password" required>
 
 <button type="submit">Kirjaudu</button>
 
-<p id="viesti"></p>
+<p id="viesti">
+        <?php
+    if ( isset( $_POST["username"]) && isset( $_POST ["password"] ) ) {
+        $user_id = authenticate_user ( $_POST["username"], $_POST["password"], $db );
+
+        if( !$user_id) {
+            echo "Käyttäjätunnus tai salasana väärin";         
+        } else {
+            echo "Tervetuloa!";
+    }
+    }
+        ?>
+</p>
 </form>
-
-<script>
-function tarkista() {
-  var kayttaja = document.getElementById("kayttaja").value;
-  var salasana = document.getElementById("salasana").value;
-  var viesti = document.getElementById("viesti");
-
-  if (kayttaja == "admin" && salasana == "salasana") {
-    viesti.style.color = "green";
-    viesti.innerHTML = "Kirjautuminen onnistui";
-  } else {
-    viesti.style.color = "red";
-    viesti.innerHTML = "Väärä käyttäjätunnus tai salasana";
-  }
-
-  return false;
-}
-</script>
 
 </body>
 </html>

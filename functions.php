@@ -1,6 +1,6 @@
 <?php
 $db = new PDO(
-    dsn: "mysql:hsto=localhgost;dbname=projekti",
+    dsn: "mysql:dbname=projekti",
     username:  "testiprojekti", 
     password: "Mansikka123", 
 );
@@ -40,5 +40,4 @@ $stmt ->execute( [
    return $user ["id"];
 }
 
-var_dump( authenticate_user( "admin", "password", $db ) );
-var_dump( authenticate_user( "admin", "wrong", $db ) );
+
