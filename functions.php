@@ -1,8 +1,10 @@
 <?php
+$settings = require( "settingst.php" );
+
 $db = new PDO(
-    dsn: "mysql:dbname=projekti",
-    username:  "testiprojekti", 
-    password: "Mansikka123", 
+    dsn: "mysql:dbname=" . $settings ["dbname"],
+    username: $settings ["username"], 
+    password: $settings ["password"], 
 );
 function add_user ( string $username, string $password, PDO $db ): int {
     $stmt = $db->prepare( "
