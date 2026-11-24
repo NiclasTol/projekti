@@ -1,5 +1,21 @@
 <?php 
 require ( "functions.php");
+
+$message = "";
+ 
+    if ( isset( $_POST["username"]) && isset( $_POST ["password"] ) ) {
+        $user_id = authenticate_user ( $_POST["username"], $_POST["password"], $db );
+
+        if( !$user_id) {
+            $message = "Käyttäjätunnus tai salasana väärin";         
+        } else {
+            $message = "Tervetuloa!";
+            $_SESSION["user_id"] = $user_id;
+
+              header ( "Location: /");
+            exit;
+    }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +71,7 @@ button:hover {
 </head>
 <body>
 
-<form method="post" action="/login.php">
+<form method="post" action="/">
 <h1>Kirjaudu sisään</h1>
 
 <label for="username">Käyttäjätunnus:</label>
@@ -67,17 +83,9 @@ button:hover {
 <button type="submit">Kirjaudu</button>
 
 <p id="viesti">
-        <?php
-    if ( isset( $_POST["username"]) && isset( $_POST ["password"] ) ) {
-        $user_id = authenticate_user ( $_POST["username"], $_POST["password"], $db );
-
-        if( !$user_id) {
-            echo "Käyttäjätunnus tai salasana väärin";         
-        } else {
-            echo "Tervetuloa!";
-    }
-    }
-        ?>
+        <?php echo $message;  ?>
+    
+       
 </p>
 </form>
 
