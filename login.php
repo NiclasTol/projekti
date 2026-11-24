@@ -1,6 +1,7 @@
 <?php 
 require ( "functions.php");
 
+
 $message = "";
  
     if ( isset( $_POST["username"]) && isset( $_POST ["password"] ) ) {

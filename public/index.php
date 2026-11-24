@@ -11,8 +11,25 @@ if( isset( $_GET["logout"] ) ) {
     header( "Location: /" );
     exit;
 }
+
+$page = $_GET["page"] ?? "home";
 ?>
 
-Teretuloa!
+<h2>Tilausjärjestelmä!</h2>
 
-<a href="/index.php?logout=true">kirjaudu ulos</a
+<p>
+    <a href="/">Etusivu</a>
+    <a href="/index.php?page=users">Käyttäjät</a>
+    <a href="/index.php?logout=true">kirjaudu ulos</a>
+</p>
+
+<?php
+if ($page === "home") {
+  }  elseif(  $page === "users") {
+        require("../pages/users.php");
+  } elseif( $page === "add_user") {
+        require("../pages/add_user.php");
+  } else {
+    echo "Sivua ei löydy!";
+
+}

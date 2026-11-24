@@ -6,6 +6,7 @@ $db = new PDO(
     username: $settings ["username"], 
     password: $settings ["password"], 
 );
+
 function add_user ( string $username, string $password, PDO $db ): int {
     $stmt = $db->prepare( "
 INSERT INTO users (
@@ -14,6 +15,7 @@ INSERT INTO users (
     ) VALUES (
      :username, 
      :password
+    
      
      )
 " );
@@ -24,6 +26,13 @@ $stmt->execute( [
 
     return $db->lastInsertId();
 }
+
+function get_users( PDO $db ): array {
+    $stmt = $db->query( "SELECT id, username FROM users ORDER BY username" );
+
+    return $stmt->fetchAll( PDO::FETCH_ASSOC );
+}
+
 function authenticate_user( string $username, string $password, PDO $db ): ?int {
      $stmt = $db->prepare( "SELECT id, password FROM users WHERE username = :username LIMIT 1" );
 
