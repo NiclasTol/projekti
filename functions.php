@@ -1,5 +1,5 @@
 <?php
-$settings = require( "settingst.php" );
+$settings = require( "settings.php" );
 
 $db = new PDO(
     dsn: "mysql:dbname=" . $settings ["dbname"],
