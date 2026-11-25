@@ -6,15 +6,44 @@ $db = new PDO(
     username: $settings ["username"], 
     password: $settings ["password"], 
 );
+
+function delete_user( int $user_id, PDO $db ): void {
+    $stmt = $db->prepare( "DELETE FROM users WHERE id = :id" );
+    
+    $stmt->execute( [
+        ":id" => $user_id,
+    ] );
+}
+
+function user_id_exists( string $user_id, PDO $db ): bool {
+    $stmt = $db->prepare( "SELECT id FROM users WHERE id = :id LIMIT 1" );
+
+    $stmt->execute( [
+        ":id" => $user_id, 
+    ] );
+
+    $user = $stmt->fetch( PDO::FETCH_ASSOC);
+
+    if( ! $user ) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function get_current_user_id(): ?int {
+    return $_SESSION["user_id"] ?? null;
+}
+
 function username_exists( string $username, PDO $db ): bool {
-     $stmt = $db->prepare( "SELECT id  FROM users WHERE username = :username LIMIT 1" );
+    $stmt = $db->prepare( "SELECT id  FROM users WHERE username = :username LIMIT 1" );
 
-        $stmt ->execute( [
+    $stmt ->execute( [
         ":username" => $username 
-     ] );
+    ] );
 
-        $user = $stmt ->fetch ( PDO::FETCH_ASSOC);
-         if( ! $user ) {
+    $user = $stmt ->fetch ( PDO::FETCH_ASSOC);
+    if( ! $user ) {
         return false;
     } else {
         return true;
