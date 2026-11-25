@@ -15,6 +15,17 @@ function delete_user( int $user_id, PDO $db ): void {
     ] );
 }
 
+function get_orders( $db ) {
+    return $db->query( "SELECT * FROM orders" )->fetchAll();
+
+}
+
+function add_order( $company, $comment, $db ) {
+   $stmt = $db->prepare("INSERT INTO orders (company, comment) VALUES (?, ?)");
+    $stmt->execute([ $company, $comment ]); 
+}
+
+
 function user_id_exists( string $user_id, PDO $db ): bool {
     $stmt = $db->prepare( "SELECT id FROM users WHERE id = :id LIMIT 1" );
 

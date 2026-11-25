@@ -21,6 +21,7 @@ $page = $_GET["page"] ?? "home";
 <p>
     <a href="/">Etusivu</a>
     <a href="/index.php?page=users">Käyttäjät</a>
+    <a href="/index.php?page=orders">Tilaukset</a>
     <a href="/index.php?logout=true">kirjaudu ulos</a>
 </p>
 
@@ -30,7 +31,11 @@ if ($page === "home") {
         require("../pages/users.php");
   } elseif( $page === "add_user") {
         require("../pages/add_user.php");
+        } elseif( $page === "orders" ) {
+    require("../pages/orders.php");
   } else {
+ 
+    
     echo "Sivua ei löydy!";
 
 }
