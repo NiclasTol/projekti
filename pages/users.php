@@ -17,7 +17,7 @@ foreach (  $users as $user ) {
        <tr>
             <td>'. htmlspecialchars( $user["username"] ) . '</td>
          <td>
-            <a href="/index.php?page=users&delete=' .  $user["id"] .  '">Poista</a>
+            <a href="/index.php?page=users&delete=' . intval (  $user["id"] ) .  '">Poista</a>
          </td>
      </tr>
      ';
