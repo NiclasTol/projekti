@@ -1,8 +1,23 @@
 <?php
 $message = "";
-if( isset( $_POST["company"]) && isset ( $_POST["comment"] ) ) {
-   add_order ($_POST["company"], $_POST["comment"], $db );
-   $message = "Tilaus lisätty";
+
+if( $_SERVER["REQUEST_METHOD"] === "POST" ) {
+    $company = trim( Request::post_string( "company" ) );
+    $comment = trim( Request::post_string( "comment" ) );
+
+    if( strlen( $company ) === 0 ) {
+        $message = "Yritys puuttuu";
+    } elseif( strlen( $comment ) === 0 ) {
+        $message = "Kommentti puuttuu";
+    } else {
+        $order = new Order(
+            company: $company,
+            comment: $comment,
+        );
+
+        add_order( $order, $db );
+        $message = "Tilaus lisätty";
+    }
 }
 ?>
 

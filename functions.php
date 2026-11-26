@@ -15,15 +15,32 @@ function delete_user( int $user_id, PDO $db ): void {
     ] );
 }
 
+
+
 function get_orders( $db ) {
-    return $db->query( "SELECT * FROM orders" )->fetchAll();
+    $rows = $db->query( "SELECT * FROM orders" )->fetchAll();
 
+    $orders = [];
+    foreach ( $rows as $row ) {
+        $orders[] = new Order(
+            company: $row["company"],
+            comment: $row["comment"],
+            id: (int) $row["id"],
+        );
+    }
+    return $orders;
 }
 
-function add_order( $company, $comment, $db ) {
-   $stmt = $db->prepare("INSERT INTO orders (company, comment) VALUES (?, ?)");
-    $stmt->execute([ $company, $comment ]); 
+function add_order( Order $order, $db ) {
+    $stmt = $db->prepare(
+        "INSERT INTO orders (company, comment) VALUES (:company, :comment)"
+    );
+    $stmt->execute([
+        ":company" => $order->company,
+        ":comment" => $order->comment,
+    ]);
 }
+
 
 
 function user_id_exists( string $user_id, PDO $db ): bool {
@@ -103,6 +120,7 @@ function get_users( PDO $db ): array {
 
     return $users;
 }
+
 
 function authenticate_user( string $username, string $password, PDO $db ): ?int {
      $stmt = $db->prepare( "SELECT id, password FROM users WHERE username = :username LIMIT 1" );

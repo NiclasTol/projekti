@@ -1,5 +1,5 @@
 <?php
-$orders = get_orders ( $db );
+$orders = get_orders( $db );
 ?>
 
 <h3>Tilaukset</h3>
@@ -9,16 +9,15 @@ $orders = get_orders ( $db );
         <th>Yritys</th>
         <th>Kommentti</th>
     </tr>
-    <?php 
+    <?php
 foreach (  $orders as $order ) {
     echo '
        <tr>
-            <td>'. htmlspecialchars( $order["company"] ) . '</td>
-            <td>'. htmlspecialchars( $order["comment"] ) . '</td>
-         
-     </tr>
+            <td>'. htmlspecialchars( $order->company ) . '</td>
+            <td>'. htmlspecialchars( $order->comment ) . '</td>
+       </tr>
      ';
 }
 ?>
-  
+
 </table>
