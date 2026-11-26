@@ -1,8 +1,10 @@
 <?php
-require_once (__DIR__ . "/../functions.php");
-session_start ();
+require_once( __DIR__ . "/../autoload.php" );
+require_once( __DIR__ . "/../functions.php" );
 
-if ( empty(  $_SESSION ["user_id"] ) ){
+session_start();
+
+if( empty(  $_SESSION ["user_id"] ) ){
     require ( "../login.php");
     exit;
 }
