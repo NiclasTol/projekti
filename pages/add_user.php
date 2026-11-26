@@ -1,11 +1,18 @@
 <?php
 $message = "";
+
 if( isset( $_POST["username"]) && isset ( $_POST["password"] ) ) {
    if( username_exists( $_POST["username"], $db ) ) {
-    $message = "Käyttäjänimi on jo käytössä";
+        $message = "Käyttäjänimi on jo käytössä";
    } else {
-    add_user( $_POST["username"], $_POST["password"], $db );
-    $message = "käyttäjä lisätty";
+    $user = new User(
+       username: $_POST["username"],
+       password: $_POST["password"],
+
+    );
+        add_user( $user, $db );
+        $message = "käyttäjä lisätty";
+
    }
 }
 ?>

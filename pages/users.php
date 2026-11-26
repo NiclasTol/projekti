@@ -30,9 +30,9 @@ $users = get_users( $db );
 foreach (  $users as $user ) {
     echo '
        <tr>
-            <td>'. htmlspecialchars( $user["username"] ) . '</td>
+            <td>'. htmlspecialchars( $user->username ) . '</td>
          <td>
-            <a href="/index.php?page=users&delete=' . intval (  $user["id"] ) .  '">Poista</a>
+            <a href="/index.php?page=users&delete=' . intval (  $user->id ) .  '">Poista</a>
          </td>
      </tr>
      ';

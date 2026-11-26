@@ -61,9 +61,9 @@ function username_exists( string $username, PDO $db ): bool {
     }
 }
 
-function add_user ( string $username, string $password, PDO $db ): int {
+function add_user ( User $user, PDO $db ): int {
     $stmt = $db->prepare( "
-INSERT INTO users (
+    INSERT INTO users (
     username, 
     password
     ) VALUES (
@@ -73,18 +73,35 @@ INSERT INTO users (
      
      )
 " );
-$stmt->execute( [
-    ":username" => $username ,
-     ":password" => password_hash( $password, PASSWORD_DEFAULT ),
-] );
+    $stmt->execute( [
+        ":username" => $user->username,
+        ":password" => password_hash( $user->password, PASSWORD_DEFAULT ),
+    ] );
 
     return $db->lastInsertId();
 }
 
+/**
+ * @return array<User>
+ */
 function get_users( PDO $db ): array {
-    $stmt = $db->query( "SELECT id, username FROM users ORDER BY username" );
+    $stmt = $db->query( "SELECT id, username, password FROM users ORDER BY username" );
 
-    return $stmt->fetchAll( PDO::FETCH_ASSOC );
+    $results = $stmt->fetchAll( PDO::FETCH_ASSOC );
+
+    $users = [];
+
+    foreach( $results as $result ) {
+        $user = new User (
+            username: $result["username"],
+            password: $result["password"],
+            id: $result["id"],
+        );
+
+        $users[] = $user;
+    }
+
+    return $users;
 }
 
 function authenticate_user( string $username, string $password, PDO $db ): ?int {
