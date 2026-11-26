@@ -13,7 +13,7 @@ if( isset( $_GET["logout"] ) ) {
     exit;
 }
 
-$page = $_GET["page"] ?? "home";
+
 ?>
 
 <h2>Tilausjärjestelmä!</h2>
@@ -26,16 +26,15 @@ $page = $_GET["page"] ?? "home";
 </p>
 
 <?php
-if ($page === "home") {
-  }  elseif(  $page === "users") {
-        require("../pages/users.php");
-  } elseif( $page === "add_user") {
-        require("../pages/add_user.php");
-        } elseif( $page === "orders" ) {
-    require("../pages/orders.php");
-  } else {
- 
-    
-    echo "Sivua ei löydy!";
+$page = $_GET["page"] ?? "home";
+$page = preg_replace( "/[^a-z0-9_]/", "", $page );
+$page_file = __DIR__ . "/../pages/" . $page . ".php";
 
+
+if( ! file_exists( $page_file ) ) {
+    echo "sivua ei löydy!";
+} else {
+    require_once( $page_file );
 }
+
+
